@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "fab-phab",
+  "version": "1.0.0",
+  "author": "Tanner Perrien",
+  "description": "Provides a browser action to quickly generate a phab task from a fab crash",
+  "page_action": {
+    "default_title": "Create Phab Task"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "background": {
+    "scripts": ["scripts/background.js"],
+    "persistent": false
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  }
+}
