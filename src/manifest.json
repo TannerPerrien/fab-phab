@@ -12,9 +12,17 @@
     "activeTab",
     "storage"
   ],
+  "optional_permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
   "background": {
-    "scripts": ["scripts/background.js"],
+    "page": "background.html",
     "persistent": false
+  },
+  "sandbox": {
+     "pages": ["template_parser.html"]
   },
   "options_ui": {
     "page": "options.html",

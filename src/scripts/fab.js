@@ -1,11 +1,13 @@
 var $ = require('jquery');
-var handlebars = require('handlebars');
 
 function parseException() {
     var regex = /.*\.(.*)/;
     var exception = $.trim($('.stack-frames:last-of-type .stack-frame-header:last-of-type .title').text());
     var parts = regex.exec(exception);
-    return parts.length === 2 ? parts[1] : "";
+    if (parts && parts.length == 2) {
+        return parts[1];
+    }
+    return "";
 }
 
 function parseOrigin() {
@@ -16,7 +18,10 @@ function parseVersion() {
     var regex = /.*([0-9]+\.[0-9]+\.[0-9]+.*\(\d+\))/;
     var version = $.trim($('.i_header .current-details .header5').text());
     var parts = regex.exec(version);
-    return parts.length === 2 ? parts[1] : "";
+    if (parts && parts.length === 2) {
+        return parts[1];
+    }
+    return "";
 }
 
 function parseUrl() {
@@ -25,7 +30,9 @@ function parseUrl() {
 
 function parseStacktrace() {
     $('.toggle-code').click();
-    return $.trim($('.raw-code').text());
+    var trace = $.trim($('.raw-code').text());
+    $('.toggle-code').click();
+    return trace;
 }
 
 function buildContext() {
@@ -39,22 +46,21 @@ function buildContext() {
         origin: encodeURIComponent(origin),
         version: encodeURIComponent(version),
         url: encodeURIComponent(url),
-        stacktrace: "" // Passing the stack trace results in: HTTP Error 414 Request URI too long
+        stacktrace: parseStacktrace()
     };
 }
 
-function formatUrl(context, url) {
-    var template = handlebars.compile(url);
-    return template(context);
+function process() {
+    chrome.runtime.sendMessage({
+        context: buildContext()
+    }, function(response) { });
 }
 
-chrome.storage.sync.get({
-    phab_url: null
-}, function(items) {
-    var phab_url = items.phab_url;
-    if (phab_url) {
-        var context = buildContext();
-        var url = formatUrl(context, phab_url);
-        window.open(url, '_blank');
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    switch (request.action) {
+        case 'process':
+            process();
+            break;
     }
 });

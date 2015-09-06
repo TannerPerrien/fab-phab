@@ -81,7 +81,7 @@ gulp.task('zip', ['html', 'scripts', 'styles', 'copy'], function() {
         .pipe(gulp.dest('dist'));
     //build distributable extension
     return gulp.src(['build/**', '!build/scripts/**/*.map'])
-        .pipe(size())
+        .pipe(size({showFiles: false}))
         .pipe(zip(distFileName))
         .pipe(gulp.dest('dist'));
 });

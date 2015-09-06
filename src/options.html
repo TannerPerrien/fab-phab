@@ -1,11 +1,76 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <label for="url">Phab URL <span style="font-style:italic;">(required)</span></label>
+    <span style="font-style:italic;">Templates: {{url}}, {{exception}}, {{origin}}, {{version}}, {{stacktrace}}</span>
     <br />
-    <span style="font-style:italic;">Templates: {{exception}}, {{origin}}, {{version}}, {{url}}</span>
-    <textarea id="phab_url" cols="80" rows="8"></textarea>
+    <table>
+        <tbody>
+            <tr>
+                <td style="width:140px;">
+                    <label for="phab_url">Phab URL <span style="font-style:italic;">(required)</span></label>
+                </td>
+                <td>
+                    <input type="text" id="phab_url" style="width:100%;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="title">Title</label>
+                </td>
+                <td>
+                    <input type="text" id="title" style="width:100%;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="title_css">Title CSS Path</label>
+                </td>
+                <td>
+                    <input type="text" id="title_css" style="width:100%;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="type">Type</label>
+                </td>
+                <td>
+                    <input type="text" id="type" style="width:100%;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="type_css">Type CSS Path</label>
+                </td>
+                <td>
+                    <input type="text" id="type_css" style="width:100%;" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label for="description">Description</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea id="description" cols="80" rows="8"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="description_css">Description CSS Path</label>
+                </td>
+                <td>
+                    <input type="text" id="description_css" style="width:100%;" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
     <button id="save">Save</button>
+    <button id="export">Export</button>
+    <button id="import">Import</button>
+    <input type="text" id="importexport" placeholder="Import/Export here..." />
+
     <script src="scripts/options.js"></script>
 </body>
 </html>

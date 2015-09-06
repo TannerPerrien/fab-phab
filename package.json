@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "jquery": "^2.1.4",
-    "handlebars": "^3.0.3"
+    "handlebars": "^3.0.3",
+    "underscore": "^1.8.3"
   }
 }
