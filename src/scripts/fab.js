@@ -50,17 +50,12 @@ function buildContext() {
     };
 }
 
-function process() {
-    chrome.runtime.sendMessage({
-        context: buildContext()
-    }, function(response) { });
-}
-
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.action) {
         case 'process':
-            process();
+            sendResponse({
+                context: buildContext()
+            });
             break;
     }
 });
