@@ -8,18 +8,18 @@ A Chrome extension allowing you to quickly turn a Fabric crash into a Phab task.
 
 * Simple browser action to convert a fabric.io crash report into a Phabricator task
 * Configurable phab task field entries
-* Simple options import/export
+* Easily import/export configuration
 
 ## Installation
 
-1. Install the extension
+1. [Install the extension][chromewebstore]
 2. Configure extension options (at a minimum, the *Phab URL* is required)
 
 ## Usage
 
 ![Address Bar](static/address-bar.png)
 
-1. Open a crash on Fabric.io
+1. Open a crash on fabric.io
 2. Wait for all page content to load
 3. Click the fab-phab icon at the right end of the address bar
 
@@ -42,3 +42,5 @@ A Chrome extension allowing you to quickly turn a Fabric crash into a Phab task.
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+[chromewebstore]: https://chrome.google.com/webstore/detail/fab-phab/hghfppcflalbkihbeofoekmfaponmpcp
