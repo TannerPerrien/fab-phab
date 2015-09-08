@@ -1,24 +1,24 @@
 var $ = require('jquery');
 
-var fab_crash_id_regex = /^https:\/\/(www\.)?fabric.io\/.*\/(\w+)$/;
-var inject_tab_map = {};
-var tab_data_map = {};
+var fabCrashIdRegex = /^https:\/\/(www\.)?fabric.io\/.*\/(\w+)$/;
+var injectTabMap = {};
+var tabDataMap = {};
 
-var process_fab = function(response) {
+var processFab = function(response) {
     if (!response.context) {
         console.log("No context");
         return;
     }
 
-    var fab_context = {};
+    var fabContext = {};
     $.each(response.context, function(key, val) {
-        fab_context[key] = decodeURIComponent(val);
+        fabContext[key] = decodeURIComponent(val);
     });
     
     chrome.storage.sync.get(null, function(items) {
         var iframe = $('#template_parser')[0];
         var message = {
-            context: fab_context,
+            context: fabContext,
             templates: items
         };
         iframe.contentWindow.postMessage(message, '*');
@@ -26,13 +26,13 @@ var process_fab = function(response) {
 };
 
 chrome.tabs.onUpdated.addListener(function(id, info, tab) {
-    var fab_parts = fab_crash_id_regex.exec(tab.url);
-    if (fab_parts && fab_parts.length > 2 && fab_parts[2]) {
+    var fabParts = fabCrashIdRegex.exec(tab.url);
+    if (fabParts && fabParts.length > 2 && fabParts[2]) {
         chrome.pageAction.show(id);
-        delete inject_tab_map[id];
-    } else if (tab_data_map[id]) {
-        var data = tab_data_map[id];
-        delete tab_data_map[id];
+        delete injectTabMap[id];
+    } else if (tabDataMap[id]) {
+        var data = tabDataMap[id];
+        delete tabDataMap[id];
         chrome.storage.sync.get(null, function(items) {
             chrome.tabs.executeScript(id, {
                 file: "scripts/phab.js"
@@ -45,23 +45,23 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab) {
 
 chrome.pageAction.onClicked.addListener(function(tab){
     chrome.storage.sync.get({
-        phab_url: null
+        phabUrl: null
     }, function(items) {
-        var phab_url = items.phab_url;
-        if (phab_url && phab_url.length > 0) {
+        var phabUrl = items.phabUrl;
+        if (phabUrl && phabUrl.length > 0) {
             chrome.permissions.request({
                 permissions: ['tabs'],
-                origins: [phab_url]
+                origins: [phabUrl]
             }, function(granted) {
                 if (granted) {
-                    if (inject_tab_map[tab.id]) {
-                        chrome.tabs.sendMessage(tab.id, { action: 'process'}, process_fab);
+                    if (injectTabMap[tab.id]) {
+                        chrome.tabs.sendMessage(tab.id, { action: 'process'}, processFab);
                     } else {
                         chrome.tabs.executeScript(tab.id, {
                             file: "scripts/fab.js"
                         }, function() {
-                            inject_tab_map[tab.id] = 1;
-                            chrome.tabs.sendMessage(tab.id, { action: 'process'}, process_fab);
+                            injectTabMap[tab.id] = 1;
+                            chrome.tabs.sendMessage(tab.id, { action: 'process'}, processFab);
                         });
                     }
                 } else {
@@ -77,9 +77,9 @@ chrome.pageAction.onClicked.addListener(function(tab){
 window.addEventListener('message', function(event) {
     if (event.data.values) {
         chrome.tabs.create({
-            url: event.data.values.phab_url
+            url: event.data.values.phabUrl
         }, function(tab) {
-            tab_data_map[tab.id] = {
+            tabDataMap[tab.id] = {
                 values: event.data.values
             };
         });

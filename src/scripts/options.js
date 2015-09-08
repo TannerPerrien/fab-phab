@@ -1,9 +1,9 @@
 var $ = require('jquery');
 var _ = require('underscore');
 
-var options = ['phab_url', 'title', 'title_css', 'type', 'type_css', 'description', 'description_css'];
+var options = ['phabUrl', 'title', 'titleCss', 'type', 'typeCss', 'description', 'descriptionCss'];
 
-function save_options() {
+var saveOptions = function() {
     var data = {};
     $.each(options, function(i, val) {
         data[val] = $('#'+val).val();
@@ -11,9 +11,9 @@ function save_options() {
     chrome.storage.sync.set(data, function() {
         window.close();
     });
-}
+};
 
-function restore_options() {
+var restoreOptions = function() {
     var data = {};
     $.each(options, function(i, val) {
         data[val] = "";
@@ -23,28 +23,28 @@ function restore_options() {
             $('#'+key).val(value);
         });
     });
-}
+};
 
-function export_settings() {
+var exportSettings = function() {
     var data = {};
     $.each(options, function(i, val) {
         data[val] = $('#'+val).val();
     });
     $('#importexport').val(JSON.stringify(data));
-}
+};
 
-function import_settings() {
+var importSettings = function() {
     var input = $('#importexport');
     var raw = input.val();
     if (raw) {
         var data = JSON.parse(raw);
         data = _.pick(data, options);
         input.val('');
-        chrome.storage.sync.set(data, restore_options);
+        chrome.storage.sync.set(data, restoreOptions);
     }
-}
+};
 
-document.addEventListener('DOMContentLoaded', restore_options);
-$('#save').click(save_options);
-$('#export').click(export_settings);
-$('#import').click(import_settings);
+document.addEventListener('DOMContentLoaded', restoreOptions);
+$('#save').click(saveOptions);
+$('#export').click(exportSettings);
+$('#import').click(importSettings);

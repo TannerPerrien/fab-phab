@@ -1,6 +1,6 @@
 var $ = require('jquery');
 
-function parseException() {
+var parseException = function() {
     var regex = /.*\.(.*)/;
     var exception = $.trim($('.stack-frames:last-of-type .stack-frame-header:last-of-type .title').text());
     var parts = regex.exec(exception);
@@ -8,13 +8,13 @@ function parseException() {
         return parts[1];
     }
     return "";
-}
+};
 
-function parseOrigin() {
+var parseOrigin = function() {
     return $.trim($('.issue .flex-1 span:first').text());
-}
+};
 
-function parseVersion() {
+var parseVersion = function() {
     var regex = /.*([0-9]+\.[0-9]+\.[0-9]+.*\(\d+\))/;
     var version = $.trim($('.i_header .current-details .header5').text());
     var parts = regex.exec(version);
@@ -22,20 +22,20 @@ function parseVersion() {
         return parts[1];
     }
     return "";
-}
+};
 
-function parseUrl() {
+var parseUrl = function() {
     return window.location.href;
-}
+};
 
-function parseStacktrace() {
+var parseStacktrace = function() {
     $('.toggle-code').click();
     var trace = $.trim($('.raw-code').text());
     $('.toggle-code').click();
     return trace;
-}
+};
 
-function buildContext() {
+var buildContext = function() {
     var exception = parseException();
     var origin = parseOrigin();
     var version = parseVersion();
@@ -48,7 +48,7 @@ function buildContext() {
         url: encodeURIComponent(url),
         stacktrace: parseStacktrace()
     };
-}
+};
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.action) {

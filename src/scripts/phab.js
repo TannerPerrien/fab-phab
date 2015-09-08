@@ -1,5 +1,7 @@
 var $ = require('jquery');
 
+var CSS_SUFFIX = "Css";
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (!request.context) {
@@ -9,9 +11,9 @@ chrome.runtime.onMessage.addListener(
     // Set text inputs
     var options = request.options;
     $.each(request.values, function(key, val) {
-        var css_key = key + "_css";
-        if (options[css_key]) {
-            var input = $(options[css_key]);
+        var cssKey = key + CSS_SUFFIX;
+        if (options[cssKey]) {
+            var input = $(options[cssKey]);
             if (input.is('select')) {
                 input.find('option').filter(function() {
                     return ($(this).text().toLowerCase() == val.toLowerCase());
