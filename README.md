@@ -23,6 +23,11 @@ A Chrome extension allowing you to quickly turn a Fabric crash into a Phab task.
 2. Wait for all page content to load
 3. Click the fab-phab icon at the right end of the address bar
 
+## Building
+
+    npm install
+    gulp
+
 ## Extension Overview
 
 ![Flowchart](https://cdn.rawgit.com/TannerPerrien/fab-phab/master/static/fab-phab.svg)
