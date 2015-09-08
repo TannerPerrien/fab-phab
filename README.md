@@ -17,6 +17,8 @@ A Chrome extension allowing you to quickly turn a Fabric crash into a Phab task.
 
 ## Usage
 
+![Address Bar](static/address-bar.png)
+
 1. Open a crash on Fabric.io
 2. Wait for all page content to load
 3. Click the fab-phab icon at the right end of the address bar
