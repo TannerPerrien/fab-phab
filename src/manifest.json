@@ -3,7 +3,7 @@
   "name": "fab-phab",
   "version": "1.0.0",
   "author": "Tanner Perrien",
-  "description": "Provides a browser action to quickly generate a phab task from a fab crash",
+  "description": "A Chrome extension allowing you to quickly turn a Fabric crash into a Phab task",
   "page_action": {
     "default_title": "Create Phab Task",
     "default_icon": {
