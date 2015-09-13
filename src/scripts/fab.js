@@ -15,7 +15,7 @@ var parseOrigin = function() {
 };
 
 var parseVersion = function() {
-    var regex = /.*([0-9]+\.[0-9]+\.[0-9]+.*\(\d+\))/;
+    var regex = /([0-9]+\.[0-9]+\.[0-9]+.*\(\d+\))/;
     var version = $.trim($('.i_header .current-details .header5').text());
     var parts = regex.exec(version);
     if (parts && parts.length === 2) {
