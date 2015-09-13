@@ -50,7 +50,7 @@ gulp.task('scripts', ['jshint'], function() {
         .pipe(gulp.dest('build/scripts/vendors'));
 
     var browserified = transform(function(filename) {
-    var b = browserify(filename);
+        var b = browserify(filename);
         return b.bundle();
     });
 
