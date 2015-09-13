@@ -1,9 +1,11 @@
 var $ = require('jquery');
 var _ = require('underscore');
+var analytics = require('./analytics.js');
 
 var options = ['phabUrl', 'title', 'titleCss', 'type', 'typeCss', 'description', 'descriptionCss'];
 
 var saveOptions = function() {
+    analytics.trackEvent('options', 'save', null, null, {useBeacon: true});
     var data = {};
     $.each(options, function(i, val) {
         data[val] = $('#'+val).val();
@@ -14,6 +16,7 @@ var saveOptions = function() {
 };
 
 var restoreOptions = function() {
+    analytics.trackEvent('options', 'restore');
     var data = {};
     $.each(options, function(i, val) {
         data[val] = "";
@@ -26,6 +29,7 @@ var restoreOptions = function() {
 };
 
 var exportSettings = function() {
+    analytics.trackEvent('options', 'export');
     var data = {};
     $.each(options, function(i, val) {
         data[val] = $('#'+val).val();
@@ -34,6 +38,7 @@ var exportSettings = function() {
 };
 
 var importSettings = function() {
+    analytics.trackEvent('options', 'import');
     var input = $('#importexport');
     var raw = input.val();
     if (raw) {
@@ -48,3 +53,5 @@ document.addEventListener('DOMContentLoaded', restoreOptions);
 $('#save').click(saveOptions);
 $('#export').click(exportSettings);
 $('#import').click(importSettings);
+
+analytics.trackPageview();

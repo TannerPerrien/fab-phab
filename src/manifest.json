@@ -4,15 +4,10 @@
   "version": "1.0.0",
   "author": "Tanner Perrien",
   "description": "A Chrome extension allowing you to quickly turn a Fabric crash into a Phab task",
-  "page_action": {
-    "default_title": "Create Phab Task",
-    "default_icon": {
-      "38": "icons/page-action-38.png"
-    }
-  },
   "icons": {
     "128": "icons/logo-128.png"
-  },  
+  },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
   "permissions": [
     "tabs",
     "activeTab",
@@ -29,6 +24,12 @@
   },
   "sandbox": {
      "pages": ["template_parser.html"]
+  },
+  "page_action": {
+    "default_title": "Create Phab Task",
+    "default_icon": {
+      "38": "icons/page-action-38.png"
+    }
   },
   "options_ui": {
     "page": "options.html",

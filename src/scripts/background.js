@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var analytics = require('./analytics.js');
 
 var fabCrashIdRegex = /^https:\/\/(www\.)?fabric.io\/.*\/(\w+)$/;
 var injectTabMap = {};
@@ -28,6 +29,7 @@ var processFab = function(response) {
 chrome.tabs.onUpdated.addListener(function(id, info, tab) {
     var fabParts = fabCrashIdRegex.exec(tab.url);
     if (fabParts && fabParts.length > 2 && fabParts[2]) {
+        analytics.trackEvent('pageAction', 'show');
         chrome.pageAction.show(id);
         delete injectTabMap[id];
     } else if (tabDataMap[id]) {
@@ -54,6 +56,7 @@ chrome.pageAction.onClicked.addListener(function(tab){
                 origins: [phabUrl]
             }, function(granted) {
                 if (granted) {
+                    analytics.trackEvent('pageAction', 'click');
                     if (injectTabMap[tab.id]) {
                         chrome.tabs.sendMessage(tab.id, { action: 'process'}, processFab);
                     } else {
@@ -85,3 +88,5 @@ window.addEventListener('message', function(event) {
         });
     }
 });
+
+analytics.trackPageview();
