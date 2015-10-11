@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "fab-phab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Tanner Perrien",
   "description": "A Chrome extension allowing you to quickly turn a Fabric crash into a Phab task",
   "icons": {
