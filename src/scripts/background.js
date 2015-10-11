@@ -1,7 +1,7 @@
 var $ = require('jquery');
 var analytics = require('./analytics.js');
 
-var fabCrashIdRegex = /^https:\/\/(www\.)?fabric.io\/.*\/(\w+)$/;
+var fabCrashIdRegex = /^https:\/\/(www\.)?fabric.io\/(?!.*sessions).*\/(\w+)$/;
 var injectTabMap = {};
 var tabDataMap = {};
 
@@ -32,7 +32,11 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab) {
         analytics.trackEvent('pageAction', 'show');
         chrome.pageAction.show(id);
         delete injectTabMap[id];
-    } else if (tabDataMap[id]) {
+    } else {
+        chrome.pageAction.hide(id);
+    }
+
+    if (tabDataMap[id]) {
         var data = tabDataMap[id];
         delete tabDataMap[id];
         chrome.storage.sync.get(null, function(items) {
